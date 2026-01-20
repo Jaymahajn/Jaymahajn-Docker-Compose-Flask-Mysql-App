@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  sql:
+    image: mysql:8
+    container_name: sql-host
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdb
+    networks:
+      - apple
+    
+  web:
+    build: .
+    container_name: flask-app
+    environment:
+      MYSQL_HOST: sql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: testdb
+    ports:
+      - "5000:5000"
+    depends_on:
+      - sql
+    networks:
+      - apple
+
+networks:
+  apple:
+    
+
+
